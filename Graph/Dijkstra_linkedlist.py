@@ -1,11 +1,7 @@
-# Dijkstra's algorithm for shortest paths
-# David Eppstein, UC Irvine, 4 April 2002
-
-# http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/117228
 from priodict import priorityDictionary
 
 def Dijkstra(G,start,end=None):
-	
+
 	D = {}	# dictionary of final distances
 	P = {}	# dictionary of predecessors
 	Q = priorityDictionary()	# estimated distances of non-final vertices
