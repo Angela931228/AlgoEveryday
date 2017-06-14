@@ -1,6 +1,6 @@
 import numpy as np
 import copy
-
+import time
 cur_pos = 'N' # N E S W 
 status = 0 # 0 for empty 1 for carring rack
 DIR_COST = 1;
@@ -22,13 +22,13 @@ B = np.array([[{'S'}, {'W'}, {'W', 'S'}, {'W'}],
 			  [{'S'}, {'N', 'W'}, {'S', 'W'}, {'N', 'W'}],
 			  [{'S', 'E'}, {'N', 'E'}, {'S', 'E'}, {'N', 'E'}, {'E'}, {'E', 'S'}, {'S'}],
 			  [{'S', 'E'}, {'N', 'E'}, {'S', 'E'}, {'N', 'E'}, {'E'}, {'E', 'S'}, {'S'}],
-			  [{'S', 'W'}, {'N', 'W'}, {'S', 'W'}, {'N', 'W'}, {'W'}, {'W', 'S'}, {'W', 'S'}],
+			  [{'S'}, {'N', 'W'}, {'S', 'W'}, {'N', 'W'}, {'W'}, {'W', 'S'}, {'W', 'S'}],
 			  [{'S', 'E'}, {'N', 'E'}, {'S', 'E'}, {'N', 'E'}, {'E'}, {'E', 'S'}, {'S'}],
-			  [{'S', 'W'}, {'N', 'W'}, {'S', 'W'}, {'N', 'W'}, {'W'}, {'W', 'S'}, {'W', 'S'}],
-			  [{'S', 'W'}, {'N', 'W'}, {'S', 'W'}, {'N', 'W'}, {'W'}, {'W'}, {'S'}],
+			  [{'S'}, {'N', 'W'}, {'S', 'W'}, {'N', 'W'}, {'N', 'W'}, {'W', 'S'}, {'W', 'S'}],
+			  [{'S'}, {'N', 'W'}, {'S', 'W'}, {'N', 'W'}, {'N', 'W'}, {'W'}, {'W'}],
 			  [{'E'}, {'N', 'E'}, {'E'}, {'N'}]])
 #visited table
-C = np.array([[0, 0, 0, 0, 0, 0, 0],
+D = np.array([[0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0],
@@ -70,23 +70,27 @@ def getSuccessorPosition(cur_pos,s):
 		return cur_pos[0], cur_pos[1]+1
 
 
-def uniforCostSearch(start,end):
+def uniforCostSearch(start,end,status):
 	y,x = start
 	pQueue = []
+	C = copy.deepcopy(D)
 	pQueue.append((start,0,[start]))
+	result = []
 	while pQueue:
 		cur = pQueue.pop(extractMin(pQueue)) #extract the minimum cost
-		C[cur[0][0]][cur[0][1]] = 1 #mark visited
-
+		
 		if cur[0]==end:
 			return cur[2],cur[1] 
-
-		successors = getSuccessors(cur[0], 'W', '0')
-		for successor in successors:
-			if C[successor[0][0]][successor[0][1]]!=1:
-				path_tmp = copy.deepcopy(cur[2])
-				path_tmp.append(successor[0])
-				pQueue.append((successor[0],cur[1]+successor[1],path_tmp))
+			#result.append((cur[2],cur[1]))
+		else:
+			C[cur[0][0]][cur[0][1]] = 1 #mark visited
+			successors = getSuccessors(cur[0], 'W', status)
+			for successor in successors:
+				if C[successor[0][0]][successor[0][1]]!=1:
+					path_tmp = copy.deepcopy(cur[2])
+					path_tmp.append(successor[0])
+					pQueue.append((successor[0],cur[1]+successor[1],path_tmp))
+	return result
 
 def extractMin(pQueue):
 	min = 99999
@@ -96,6 +100,13 @@ def extractMin(pQueue):
 			idx = i
 			min = pQueue[i][1]
 	return idx
-print uniforCostSearch((1,0),(1,1))
+
+start = time.time()
+print uniforCostSearch((0,0),(3,1),0)
+#print uniforCostSearch((0,0),(1,1),0)
+print uniforCostSearch((1,1),(9,1),1)
+
+end = time.time()
+print end-start
 #printBoard(A,1,0)
 #print getSuccessors(1,0,'W',1)
