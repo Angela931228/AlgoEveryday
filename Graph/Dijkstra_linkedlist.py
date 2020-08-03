@@ -15,7 +15,7 @@ def Dijkstra(G,start,end=None):
 			vwLength = D[v] + G[v][w]
 			if w in D:
 				if vwLength < D[w]:
-					raise ValueError, "Dijkstra: found better path to already-final vertex"
+					raise ValueError("Dijkstra: found better path to already-final vertex")
 			elif w not in Q or vwLength < Q[w]:
 				Q[w] = vwLength
 				P[w] = v
@@ -45,5 +45,5 @@ G = {'s': {'u':10, 'x':5},
 	'x':{'u':3,'v':9,'y':2},
 	'y':{'s':7,'v':6}}
 
-print Dijkstra(G,'s')
-print shortestPath(G,'s','v')
+print(Dijkstra(G,'s'))
+print(shortestPath(G,'s','v'))

@@ -48,4 +48,4 @@ def mergeLeftAndRight(start,mid,end):
 		
 A = [2,3,5,7,6,4,1]
 mergeSort(0,(len(A)-1))
-print A
+print(A)

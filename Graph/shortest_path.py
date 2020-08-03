@@ -3,8 +3,8 @@ import copy
 import time
 cur_pos = 'N' # N E S W 
 status = 0 # 0 for empty 1 for carring rack
-DIR_COST = 1;
-TURNING_COST = 3;
+DIR_COST = 1
+TURNING_COST = 3
 A = np.array([[1, 1, 1, 1, 0, 0, 0],
               [1, 2, 2, 1, 0, 0, 0],
               [1, 2, 2, 1, 0, 0, 0],
@@ -43,7 +43,7 @@ D = np.array([[0, 0, 0, 0, 0, 0, 0],
 def printBoard(board, y, x):
 	tmp_board = copy.deepcopy(board)
 	tmp_board[y][x] = 4
-	print tmp_board
+	print(tmp_board)
 
 def getSuccessors(cur_pos, curDir, status):
 	successors =  B[cur_pos[0]][cur_pos[1]]
@@ -94,7 +94,7 @@ def uniforCostSearch(start,end,status):
 
 def extractMin(pQueue):
 	min = 99999
-	idx = 0;
+	idx = 0
 	for i in range(0,len(pQueue)):
 		if pQueue[i][1] < min:
 			idx = i
@@ -102,11 +102,11 @@ def extractMin(pQueue):
 	return idx
 
 start = time.time()
-print uniforCostSearch((0,0),(3,1),0)
+print(uniforCostSearch((0,0),(3,1),0))
 #print uniforCostSearch((0,0),(1,1),0)
-print uniforCostSearch((1,1),(9,1),1)
+print(uniforCostSearch((1,1),(9,1),1))
 
 end = time.time()
-print end-start
+print(end-start)
 #printBoard(A,1,0)
 #print getSuccessors(1,0,'W',1)

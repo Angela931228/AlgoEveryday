@@ -25,4 +25,3 @@ def mmBruteForce():
 				result[i][j] = result[i][j] + X[i][k]*Y[k][j];
 
 mmBruteForce()
-print result
